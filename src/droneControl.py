@@ -28,27 +28,31 @@ class LeapEventListener(Leap.Listener):
    #          	handType, hand.id, hand.palm_position)
 
 
-			
-			if (hand.palm_position[0] < -30):
+			#center point (0,200,0)		
+
+			#x-axis	
+			if (hand.palm_position[0] < -50):
 				print ("Moving left")
 
-			elif(hand.palm_position[0] > 30):
+			elif(hand.palm_position[0] > 50):
 				print ("Moving right")
 
-			if (hand.palm_position[1] > 170):
+			#y-axis
+			if (hand.palm_position[1] > 240):
 				print ("Moving up")
 
-			elif(hand.palm_position[1] < 100):
+			elif(hand.palm_position[1] < 160):
 				print ("Moving down")
 
 
-			if (hand.palm_position[2] > 50):
+			#z-axis
+			if (hand.palm_position[2] > 30):
 				print ("Moving back")
 
-			elif(hand.palm_position[2] < -50):
+			elif(hand.palm_position[2] < -30):
 				print ("Moving forward")
 
-			else:
+			if (hand.palm_position[0] > -50) and (hand.palm_position[0] < 50) and (hand.palm_position[1] < 240) and (hand.palm_position[1] > 160) and (hand.palm_position[2] < 30) and (hand.palm_position[2] > -30):
 				print "Not moving"
 
 
