@@ -29,7 +29,20 @@ class LeapEventListener(Leap.Listener):
         position = hand.palm_position
         velocity = hand.palm_velocity
         direction = hand.direction
-        controller.enable_gesture(Leap.Gesture.TYPE_KEY_TAP);
+        controller.enable_gesture(Leap.Gesture.TYPE_KEY_TAP)
+        controller.enable_gesture(Leap.Gesture.TYPE_CIRCLE)
+
+
+	#Key-tap gesture
+	for gesture in frame.gestures():
+		if gesture.type is Leap.Gesture.TYPE_KEY_TAP:
+			key_tap = Leap.KeyTapGesture(gesture)
+			print ("Turning drone on")
+
+		if gesture.type is Leap.Gesture.TYPE_CIRCLE:
+			circle = Leap.CircleGesture(gesture)
+			print("Turning off")
+
 
         for hand in frame.hands:
 
@@ -64,13 +77,6 @@ class LeapEventListener(Leap.Listener):
 
 			if (hand.palm_position[0] > left_bound) and (hand.palm_position[0] < right_bound) and (hand.palm_position[1] < up_bound) and (hand.palm_position[1] > down_bound) and (hand.palm_position[2] < back_bound) and (hand.palm_position[2] > forward_bound):
 				print "Not moving"
-
-
-			#Key-tap gesture
-			for gesture in frame.gestures():
-			    if gesture.type is Leap.Gesture.TYPE_KEY_TAP:
-			        key_tap = Leap.KeyTapGesture(gesture)
-			        print(key_tap.pointable)
 
 
 
