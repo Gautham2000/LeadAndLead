@@ -15,11 +15,21 @@ class LeapEventListener(Leap.Listener):
 
     def on_frame(self, controller):
 
+    	left_bound = -50
+    	right_bound = 50
+
+    	up_bound = 360
+    	down_bound = 220
+
+    	back_bound = 120
+    	forward_bound = -50
+
         frame = controller.frame()
         hand = frame.hands.rightmost
         position = hand.palm_position
         velocity = hand.palm_velocity
         direction = hand.direction
+        controller.enable_gesture(Leap.Gesture.TYPE_KEY_TAP);
 
         for hand in frame.hands:
 
@@ -27,36 +37,40 @@ class LeapEventListener(Leap.Listener):
 			#print "  %s, id %d, position: %s" % (
    #          	handType, hand.id, hand.palm_position)
 
-
+   			# print hand.palm_position
 			#center point (0,200,0)		
 
 			#x-axis	
-			if (hand.palm_position[0] < -50):
+			if (hand.palm_position[0] < left_bound):
 				print ("Moving left")
 
-			elif(hand.palm_position[0] > 50):
+			elif(hand.palm_position[0] > right_bound):
 				print ("Moving right")
 
 			#y-axis
-			if (hand.palm_position[1] > 240):
+			if (hand.palm_position[1] > up_bound):
 				print ("Moving up")
 
-			elif(hand.palm_position[1] < 160):
+			elif(hand.palm_position[1] < down_bound):
 				print ("Moving down")
 
 
 			#z-axis
-			if (hand.palm_position[2] > 30):
+			if (hand.palm_position[2] > back_bound):
 				print ("Moving back")
 
-			elif(hand.palm_position[2] < -30):
+			elif(hand.palm_position[2] < forward_bound):
 				print ("Moving forward")
 
-			if (hand.palm_position[0] > -50) and (hand.palm_position[0] < 50) and (hand.palm_position[1] < 240) and (hand.palm_position[1] > 160) and (hand.palm_position[2] < 30) and (hand.palm_position[2] > -30):
+			if (hand.palm_position[0] > left_bound) and (hand.palm_position[0] < right_bound) and (hand.palm_position[1] < up_bound) and (hand.palm_position[1] > down_bound) and (hand.palm_position[2] < back_bound) and (hand.palm_position[2] > forward_bound):
 				print "Not moving"
 
 
-
+			#Key-tap gesture
+			for gesture in frame.gestures():
+			    if gesture.type is Leap.Gesture.TYPE_KEY_TAP:
+			        key_tap = Leap.KeyTapGesture(gesture)
+			        print(key_tap.pointable)
 
 
 
